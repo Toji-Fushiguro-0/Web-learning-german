@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deutsch Lernwelt — Tự học tiếng Đức cá nhân</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <script>
+    // Áp dụng theme TRƯỚC khi CSS tải để không bị nháy trắng (FOUC)
+    (function () {
+      try {
+        var saved = localStorage.getItem("deutsch_lernwelt_theme");
+        var systemDark = window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme = (saved === "dark" || saved === "light")
+          ? saved
+          : (systemDark ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (err) {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Lớp phủ khi sidebar mở trên mobile -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ================================================================ -->
+  <!-- SIDEBAR ĐIỀU HƯỚNG                                                -->
+  <!-- ================================================================ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-flag-badge">
+        <span class="flag-stripe flag-black"></span>
+        <span class="flag-stripe flag-red"></span>
+        <span class="flag-stripe flag-gold"></span>
+      </div>
+      <div class="brand-text">
+        <h1>HalloDeutsch</h1>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-title" data-i18n="nav.group.main">Chính</div>
+      <button class="nav-item active" data-view="dashboard" data-title-key="title.dashboard" data-title="Tổng quan học tập">
+        <span>📊</span><span data-i18n="nav.dashboard">Tổng quan</span>
+      </button>
+      <button class="nav-item" data-view="placement" data-title-key="title.placement" data-title="Kiểm tra trình độ">
+        <span>🎯</span><span data-i18n="nav.placement">Kiểm tra trình độ</span>
+      </button>
+
+      <div class="nav-section-title" data-i18n="nav.group.skills">Kỹ năng cốt lõi</div>
+      <button class="nav-item" data-view="grammar" data-title-key="title.grammar" data-title="Ngữ pháp tiếng Đức">
+        <span>📘</span><span data-i18n="nav.grammar">Ngữ pháp (Grammatik)</span>
+      </button>
+      <button class="nav-item" data-view="vocabulary" data-title-key="title.vocabulary" data-title="Từ vựng & Flashcard">
+        <span>🗂️</span><span data-i18n="nav.vocabulary">Từ vựng (Flashcard)</span>
+      </button>
+
+      <button class="nav-item disabled" data-preview="hoeren" data-original-title="Đang phát triển — Giai đoạn 4" title="Đang phát triển — Giai đoạn 4">
+        <span>🎧</span><span data-i18n="nav.hoeren">Luyện nghe (Hören)</span>
+        <span class="nav-badge-soon" data-i18n="badge.soon">Sắp ra</span>
+      </button>
+      <button class="nav-item disabled" data-preview="lesen" data-original-title="Đang phát triển — Giai đoạn 4" title="Đang phát triển — Giai đoạn 4">
+        <span>📖</span><span data-i18n="nav.lesen">Đọc hiểu (Lesen)</span>
+        <span class="nav-badge-soon" data-i18n="badge.soon">Sắp ra</span>
+      </button>
+      <button class="nav-item disabled" data-preview="schreiben" data-original-title="Đang phát triển — Giai đoạn 5" title="Đang phát triển — Giai đoạn 5">
+        <span>✍️</span><span data-i18n="nav.schreiben">Luyện viết (Schreiben)</span>
+        <span class="nav-badge-soon" data-i18n="badge.soon">Sắp ra</span>
+      </button>
+
+      <div class="nav-section-title" data-i18n="nav.group.tools">Ôn tập & Công cụ</div>
+      <button class="nav-item" data-view="mistakes" data-title-key="title.mistakes" data-title="Sổ tay lỗi sai">
+        <span>📓</span><span data-i18n="nav.mistakes">Sổ tay lỗi sai</span>
+      </button>
+      <button class="nav-item disabled" data-preview="ai" data-original-title="Cần backend — Giai đoạn 7" title="Cần backend — Giai đoạn 7">
+        <span>🤖</span><span data-i18n="nav.ai">Trợ lý AI</span>
+        <span class="nav-badge-soon" data-i18n="badge.phase7">Giai đoạn 7</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span data-i18n="sidebar.saved">💾 Lưu trên trình duyệt</span>
+      <div class="sidebar-footer-actions">
+        <button class="btn-preview-toggle" id="btn-preview-toggle" type="button"
+                data-i18n-title="sidebar.preview.title" title="Mở khóa toàn bộ để xem trước giao diện">
+          👁️ Xem trước: BẬT
+        </button>
+        <button class="btn-reset-test" id="btn-reset-data" data-i18n-title="sidebar.reset.title" title="Xóa toàn bộ dữ liệu cá nhân để kiểm thử lại">
+          <span data-i18n="sidebar.reset">Reset dữ liệu</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================================================================ -->
+  <!-- KHU VỰC NỘI DUNG CHÍNH                                           -->
+  <!-- ================================================================ -->
+  <div class="main-wrapper">
+
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="header-left">
+        <button class="btn-mobile-menu" id="btn-mobile-toggle" data-i18n-aria-label="header.menu" aria-label="Mở menu">☰</button>
+        <div class="page-title-area">
+          <h2 id="page-title" data-i18n="title.dashboard">Tổng quan học tập</h2>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="user-stat-badge badge-streak" data-i18n-title="header.streak.title" title="Chuỗi ngày học liên tục">
+          🔥 <span id="header-streak-count">0</span> <span data-i18n="unit.days">ngày</span>
+        </div>
+        <div class="user-stat-badge badge-points" data-i18n-title="header.points.title" title="Tổng điểm tích lũy">
+          ⭐ <span id="header-points-count">0</span> <span data-i18n="unit.points">điểm</span>
+        </div>
+        <div class="user-stat-badge badge-coins" data-i18n-title="header.coins.title" title="Xu tích lũy — kiếm được khi học bài mới">
+          🪙 <span id="header-coins-count">0</span> <span data-i18n="unit.coins">xu</span>
+        </div>
+        <button class="btn-cloud" id="btn-cloud" type="button" data-status="off"
+                data-i18n-aria-label="header.cloud" data-i18n-title="header.cloud"
+                aria-label="Đồng bộ đám mây" title="Đồng bộ đám mây">
+          <span id="cloud-icon">☁️</span>
+        </button>
+        <button class="btn-theme-toggle" id="btn-theme-toggle" type="button"
+                data-i18n-aria-label="header.theme" data-i18n-title="header.theme"
+                aria-label="Chuyển giao diện sáng/tối" title="Chuyển giao diện sáng/tối">
+          <span id="theme-toggle-icon">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="content-container">
+
+      <!-- ============================================================ -->
+      <!-- VIEW: DASHBOARD                                               -->
+      <!-- ============================================================ -->
+      <section class="view-section active" id="view-dashboard">
+
+        <div class="dashboard-hero">
+          <h3 data-i18n="dash.hero.title">Chào mừng bạn đến với Deutsch Lernwelt!</h3>
+          <p data-i18n="dash.hero.text">Nền tảng tự học tiếng Đức cá nhân — từ A1 đến B2. Bắt đầu với ngữ pháp nền tảng và từ vựng cốt lõi.</p>
+          <div class="hero-actions">
+            <button class="btn-primary" id="btn-start-a1" data-i18n="dash.hero.grammar">📘 Học Ngữ pháp A1 →</button>
+            <button class="btn-secondary" id="btn-start-vocab" data-i18n="dash.hero.vocab">🗂️ Ôn Từ vựng</button>
+          </div>
+        </div>
+
+        <!-- Thẻ chỉ số học tập -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-icon-box gold">🔥</div>
+            <div class="metric-data">
+              <div class="metric-num" id="dash-streak-count">0</div>
+              <div class="metric-label" data-i18n="dash.metric.streak">Chuỗi ngày học (Streak)</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box green">📘</div>
+            <div class="metric-data">
+              <div class="metric-num">
+                <span id="dash-completed-count">0</span>
+                <span style="font-size:1rem;color:var(--color-text-light)" id="dash-total-count">/ — bài</span>
+              </div>
+              <div class="metric-label" data-i18n="dash.metric.lessons">Bài ngữ pháp A1 đã làm</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box blue">✓</div>
+            <div class="metric-data">
+              <div class="metric-num" id="dash-known-words">0</div>
+              <div class="metric-label" data-i18n="dash.metric.known">Từ vựng đã thuộc</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box gold">↻</div>
+            <div class="metric-data">
+              <div class="metric-num" id="dash-learning-words">0</div>
+              <div class="metric-label" data-i18n="dash.metric.learning">Từ đang ôn tập</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box blue">⭐</div>
+            <div class="metric-data">
+              <div class="metric-num" id="dash-points-count">0</div>
+              <div class="metric-label" data-i18n="dash.metric.points">Tổng điểm tích lũy</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box gold">🪙</div>
+            <div class="metric-data">
+              <div class="metric-num" id="dash-coins-count">0</div>
+              <div class="metric-label" data-i18n="dash.metric.coins">Xu tích lũy (Coins)</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box red">📓</div>
+            <div class="metric-data">
+              <div class="metric-num" id="dash-mistakes-count">0</div>
+              <div class="metric-label" data-i18n="dash.metric.mistakes">Lỗi chưa ôn lại</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mục tiêu hàng ngày -->
+        <div class="daily-goal-card">
+          <div class="daily-goal-header">
+            <h4 data-i18n="dash.goal.title">🎯 Mục tiêu hôm nay: Trả lời đúng 5 câu hỏi</h4>
+          </div>
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar-fill" id="dash-goal-bar" style="width: 0%"></div>
+          </div>
+          <p class="progress-status-text" id="dash-goal-text" data-i18n="dash.goal.empty">Bạn chưa làm bài hôm nay. Hãy bắt đầu ngay!</p>
+        </div>
+
+        <!-- Lộ trình gợi ý -->
+        <div id="study-plan-container"></div>
+
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: KIỂM TRA TRÌNH ĐỘ                                      -->
+      <!-- ============================================================ -->
+      <section class="view-section" id="view-placement">
+        <div id="placement-container"></div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: DANH SÁCH NGỮ PHÁP                                     -->
+      <!-- ============================================================ -->
+      <section class="view-section" id="view-grammar">
+        <div class="level-tabs">
+          <button class="level-btn active" data-level="A1" data-i18n="level.a1">Trình độ A1</button>
+          <button class="level-btn disabled-level" data-level="A2" data-i18n="level.a2" title="Mở khi hoàn thành A1">A2 (Khóa)</button>
+          <button class="level-btn disabled-level" data-level="B1" data-i18n="level.b1" title="Mở sau">B1 (Khóa)</button>
+          <button class="level-btn disabled-level" data-level="B2" data-i18n="level.b2" title="Mở sau">B2 (Khóa)</button>
+        </div>
+        <div class="grammar-cards-grid" id="grammar-cards-container">
+          <!-- Render tự động từ grammar.js -->
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: CHI TIẾT BÀI HỌC (LÝ THUYẾT + BÀI TẬP)               -->
+      <!-- ============================================================ -->
+      <section class="view-section" id="view-lesson-detail">
+        <div class="lesson-nav-top">
+          <button class="btn-back-link" id="btn-back-to-grammar" data-i18n="lesson.back">← Quay lại danh sách bài</button>
+        </div>
+
+        <div class="lesson-box">
+          <div class="lesson-box-header">
+            <div class="lesson-meta-tags">
+              <span class="badge-level" id="lesson-topic">A1 · Ngữ pháp</span>
+              <span class="card-time" id="lesson-time">⏱ —</span>
+            </div>
+            <h2 id="lesson-title">Bài học</h2>
+          </div>
+
+          <!-- Tabs lý thuyết / bài tập -->
+          <div class="lesson-tabs-bar">
+            <button class="lesson-tab-btn active" id="tab-btn-theory" data-i18n="lesson.tab.theory">📖 1. Lý thuyết</button>
+            <button class="lesson-tab-btn" id="tab-btn-practice" data-i18n="lesson.tab.practice">✍️ 2. Bài tập</button>
+          </div>
+
+          <div class="tab-pane active" id="theory-pane"></div>
+
+          <div class="tab-pane" id="practice-pane">
+            <div class="score-summary-banner" id="score-summary-banner"></div>
+            <div id="exercises-container"></div>
+            <div class="practice-footer-actions">
+              <button class="btn-primary" id="btn-check-answers" data-i18n="lesson.check">Kiểm tra đáp án & Xem giải thích</button>
+              <button class="btn-primary" id="btn-finish-lesson" data-i18n="lesson.save" style="background-color:var(--color-success);display:none">
+                Lưu kết quả & Hoàn thành ✓
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: TỪ VỰNG & FLASHCARD                                    -->
+      <!-- ============================================================ -->
+      <section class="view-section" id="view-vocabulary">
+        <div id="vocab-container">
+          <!-- Render tự động từ vocabulary.js -->
+          <div style="text-align:center;padding:3rem;color:var(--color-text-muted)">
+            <p data-i18n="vocab.loading">⏳ Đang tải module từ vựng...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: SỔ TAY LỖI SAI                                        -->
+      <!-- ============================================================ -->
+      <section class="view-section" id="view-mistakes">
+        <div id="mistakes-container"></div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: XEM TRƯỚC TÍNH NĂNG (placeholder)                      -->
+      <!-- ============================================================ -->
+      <section class="view-section" id="view-placeholder">
+        <div id="placeholder-box"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-msg" id="toast-notification"></div>
+
+  <!-- ================================================================ -->
+  <!-- MODAL: CẤU HÌNH ĐỒNG BỘ ĐÁM MÂY (Cloudflare)                     -->
+  <!-- ================================================================ -->
+  <div class="modal-overlay" id="cloud-modal" hidden>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="cloud-modal-title">
+      <div class="modal-header">
+        <h3 id="cloud-modal-title" data-i18n="cloud.title">☁️ Đồng bộ đám mây</h3>
+        <button class="modal-close" id="cloud-modal-close" type="button" data-i18n-aria-label="cloud.close" aria-label="Đóng">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-help" data-i18n-html="cloud.help">
+          Sao lưu dữ liệu học tập lên Cloudflare Workers + D1 (miễn phí).
+          Xem hướng dẫn tạo trong <code>CLOUDFLARE.md</code>.
+        </p>
+
+        <label class="modal-label" for="cloud-api-url" data-i18n="cloud.apiUrl">API URL</label>
+        <input class="modal-input" id="cloud-api-url" type="url" autocomplete="off"
+               placeholder="https://deutsch-lernwelt-sync.ten-ban.workers.dev">
+
+        <label class="modal-label" for="cloud-token" data-i18n="cloud.token">Token</label>
+        <input class="modal-input" id="cloud-token" type="password" autocomplete="off"
+               placeholder="Token đã đặt bằng wrangler secret put SYNC_TOKEN">
+
+        <div class="modal-status" id="cloud-status-text" data-i18n="cloud.status.off">Chưa kết nối</div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-ghost" id="cloud-disconnect" type="button" data-i18n="cloud.disconnect">Ngắt kết nối</button>
+        <button class="btn-ghost" id="cloud-pull" type="button" data-i18n="cloud.pull">Tải từ cloud</button>
+        <button class="btn-ghost" id="cloud-push" type="button" data-i18n="cloud.push">Đẩy lên ngay</button>
+        <button class="btn-primary" id="cloud-save" type="button" data-i18n="cloud.save">Lưu &amp; kết nối</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- TẢI JAVASCRIPT THEO THỨ TỰ ĐỂ TRÁNH LỖI "undefined"             -->
+  <!-- 0. data/embedded-data.js → dữ liệu nhúng (dự phòng khi mở file://) -->
+  <!-- 1. i18n.js          → I18N, t() (giao diện vi/en)               -->
+  <!-- 2. data-loader.js   → loadGrammarData(), loadVocabularyData()    -->
+  <!-- 3. data-validator.js → validateGrammarData(), validate...        -->
+  <!-- 4. storage.js        → getStorageData(), recordLessonResult()...  -->
+  <!-- 5. grammar-data.js   → GRAMMAR_LESSONS (cấu trúc bài học)        -->
+  <!-- 6. grammar.js        → renderGrammarList(), openGrammarLesson()   -->
+  <!-- 7. vocabulary.js     → initVocabularyModule()                    -->
+  <!-- 8. sync-core.js      → SyncCore (logic quyết định đồng bộ)       -->
+  <!-- 9. cloud-sync.js     → CloudSync (Cloudflare Worker, tuỳ chọn)   -->
+  <!-- 10. preview.js       → PreviewMode (mở khóa xem trước)          -->
+  <!-- 11. app.js           → Khởi động ứng dụng, điều phối views       -->
+  <!-- ================================================================ -->
+  <script src="data/embedded-data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/data-loader.js"></script>
+  <script src="js/data-validator.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/grammar-data.js"></script>
+  <script src="js/grammar.js"></script>
+  <script src="js/vocabulary.js"></script>
+  <script src="js/placement.js"></script>
+  <script src="js/study-plan.js"></script>
+  <script src="js/mistakes.js"></script>
+  <script src="js/error-detective.js"></script>
+  <script src="js/sync-core.js"></script>
+  <script src="js/cloud-sync.js"></script>
+  <script src="js/preview.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // PWA: đăng ký service worker khi chạy qua HTTP(S), bỏ qua file://
+    if ("serviceWorker" in navigator && location.protocol !== "file:") {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js").catch(function (err) {
+          console.warn("[PWA] Không đăng ký được service worker:", err.message);
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>

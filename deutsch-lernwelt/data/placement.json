@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "version": "1.0",
+    "level": "A1",
+    "totalQuestions": 12,
+    "description": "Bài kiểm tra xếp trình độ A1 — 12 câu trải đều 7 chủ đề ngữ pháp nền tảng"
+  },
+  "questions": [
+    {
+      "id": "pl-001",
+      "topic": "sein-haben",
+      "question": "Điền dạng đúng: \"Ich ______ Student.\"",
+      "options": ["bin", "bist", "ist", "sind"],
+      "correctIndex": 0,
+      "explanation": "Chủ ngữ 'ich' đi với 'bin' của động từ sein."
+    },
+    {
+      "id": "pl-002",
+      "topic": "sein-haben",
+      "question": "Chọn từ đúng: \"______ du Zeit?\" (Bạn có thời gian không?)",
+      "options": ["Bist", "Hast", "Hat", "Habt"],
+      "correctIndex": 1,
+      "explanation": "'Zeit haben' dùng haben; chủ ngữ 'du' đi với 'hast'."
+    },
+    {
+      "id": "pl-003",
+      "topic": "regular-verbs",
+      "question": "Chia động từ: \"Du ______ Deutsch.\" (lernen)",
+      "options": ["lerne", "lernst", "lernt", "lernen"],
+      "correctIndex": 1,
+      "explanation": "Ngôi 'du' thêm đuôi -st: lern + st = lernst."
+    },
+    {
+      "id": "pl-004",
+      "topic": "regular-verbs",
+      "question": "Chia động từ: \"Er ______ in Berlin.\" (wohnen)",
+      "options": ["wohne", "wohnst", "wohnt", "wohnen"],
+      "correctIndex": 2,
+      "explanation": "Ngôi 'er/sie/es' thêm đuôi -t: wohn + t = wohnt."
+    },
+    {
+      "id": "pl-005",
+      "topic": "pronouns",
+      "question": "Thay danh từ bằng đại từ: \"Das Buch ist neu. ______ ist interessant.\"",
+      "options": ["Er", "Sie", "Es", "Ihr"],
+      "correctIndex": 2,
+      "explanation": "'das Buch' là giống trung nên thay bằng 'es'."
+    },
+    {
+      "id": "pl-006",
+      "topic": "pronouns",
+      "question": "Thay danh từ bằng đại từ: \"Der Mann heißt Thomas. ______ ist Lehrer.\"",
+      "options": ["Sie", "Es", "Er", "Wir"],
+      "correctIndex": 2,
+      "explanation": "'der Mann' là giống đực nên thay bằng 'er'."
+    },
+    {
+      "id": "pl-007",
+      "topic": "articles",
+      "question": "Chọn mạo từ đúng: \"______ Frau ist Ärztin.\"",
+      "options": ["Der", "Die", "Das", "Den"],
+      "correctIndex": 1,
+      "explanation": "'Frau' là danh từ giống cái nên dùng 'die'."
+    },
+    {
+      "id": "pl-008",
+      "topic": "articles",
+      "question": "Chọn mạo từ đúng: \"______ Kind spielt im Garten.\"",
+      "options": ["Der", "Die", "Das", "Den"],
+      "correctIndex": 2,
+      "explanation": "'Kind' là danh từ giống trung nên dùng 'das'."
+    },
+    {
+      "id": "pl-009",
+      "topic": "negation",
+      "question": "Chọn phủ định đúng: \"Ich habe ______ Zeit.\" (Tôi không có thời gian.)",
+      "options": ["nicht", "kein", "keine", "keinen"],
+      "correctIndex": 2,
+      "explanation": "'Zeit' là danh từ giống cái, phủ định bằng 'keine'."
+    },
+    {
+      "id": "pl-010",
+      "topic": "negation",
+      "question": "Chọn phủ định đúng: \"Das Essen ist ______ gut.\"",
+      "options": ["kein", "keine", "nicht", "keinen"],
+      "correctIndex": 2,
+      "explanation": "Phủ định tính từ 'gut' dùng 'nicht', không dùng kein."
+    },
+    {
+      "id": "pl-011",
+      "topic": "questions",
+      "question": "Chọn từ hỏi đúng: \"______ wohnst du?\" (Bạn sống ở đâu?)",
+      "options": ["Wo", "Wer", "Was", "Wie"],
+      "correctIndex": 0,
+      "explanation": "'Wo' hỏi về địa điểm; 'Wer' hỏi người, 'Was' hỏi vật."
+    },
+    {
+      "id": "pl-012",
+      "topic": "word-order",
+      "question": "Chọn dạng đúng: \"Morgen ______ ich in die Schule.\" (gehen)",
+      "options": ["gehe", "gehen", "geht", "gehst"],
+      "correctIndex": 0,
+      "explanation": "Trạng từ đứng đầu câu, động từ vẫn ở vị trí 2: Morgen gehe ich…"
+    }
+  ]
+}

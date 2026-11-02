@@ -1,0 +1,22 @@
+# worker/wrangler.toml — cấu hình Cloudflare Worker (gói miễn phí)
+#
+# Sau khi chạy:  npx wrangler d1 create deutsch-lernwelt-db
+# hãy dán database_id mà lệnh đó in ra vào biến bên dưới.
+
+name = "deutsch-lernwelt-sync"
+main = "src/index.mjs"
+compatibility_date = "2026-09-01"
+
+# Gói miễn phí: 100.000 request/ngày
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "deutsch-lernwelt-db"
+database_id = "REPLACE_WITH_DATABASE_ID"
+
+[vars]
+# "*" = cho phép mọi origin (phù hợp ứng dụng cá nhân, bảo vệ bằng token).
+# Có thể đặt danh sách, ví dụ: "https://deutsch-lernwelt.pages.dev,http://localhost:8080"
+ALLOWED_ORIGIN = "*"

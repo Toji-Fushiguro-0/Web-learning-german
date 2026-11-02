@@ -1,0 +1,16 @@
+{
+  "name": "deutsch-lernwelt",
+  "version": "3.1.0",
+  "private": true,
+  "description": "Ứng dụng tự học tiếng Đức A1 — static, có thể đồng bộ lên Cloudflare (tuỳ chọn)",
+  "scripts": {
+    "serve": "node tools/serve.js 8080",
+    "build:data": "node tools/build-embedded-data.js",
+    "test": "node tests/sync.test.mjs && node tests/ui.test.mjs && node tests/static.test.mjs && node tests/i18n.test.mjs",
+    "worker:dev": "npx --yes wrangler@latest dev --config worker/wrangler.toml",
+    "worker:deploy": "npx --yes wrangler@latest deploy --config worker/wrangler.toml",
+    "db:create": "npx --yes wrangler@latest d1 create deutsch-lernwelt-db",
+    "db:init": "npx --yes wrangler@latest d1 execute deutsch-lernwelt-db --config worker/wrangler.toml --remote --file=worker/schema.sql",
+    "db:init:local": "npx --yes wrangler@latest d1 execute deutsch-lernwelt-db --config worker/wrangler.toml --local --file=worker/schema.sql"
+  }
+}
